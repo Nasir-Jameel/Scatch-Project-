@@ -1,7 +1,8 @@
 const userModel = require("../Models/User-model");
-const  {comparePass } = require("../utils/decryptPass");
-const { hashPass } = require("../utils/encryptPass");
-const { jsontoken } = require("../utils/GenrateToken");
+const { comparePass } = require("../utils/dcryptPass"); 
+const { hashPass } = require("../utils/encryptPass");    
+const { jsontoken } = require("../utils/generatetoken");   
+
  
 
 const registerUser = async (req, res) => {

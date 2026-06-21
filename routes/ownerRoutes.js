@@ -1,5 +1,5 @@
 const express = require("express");
-const router = express();
+const router = express.Router(); // Fixed: Changed express() to express.Router()
 let ownerModel = require("../Models/owner-model");
 
 router.get("/", async (req, res) => {
@@ -7,36 +7,35 @@ router.get("/", async (req, res) => {
 });
 
 // DEV routes
-if (process.env.NODE_ENV == "development") {
-  try {
-    router.post("/create", async (req, res) => {
+if (process.env.NODE_ENV === "development") {
+  router.post("/create", async (req, res) => {
+    try {
       let { fullname, email, password, contact } = req.body;
       let owners = await ownerModel.find();
       if (owners.length > 0) {
-        res.send({
+        return res.send({ // Added return here to cleanly stop execution
           response: "Their can be only 1 owner",
         });
-        return;
-      } else {
-        let createdOwner = await ownerModel.create({
-          fullname,
-          email,
-          password,
-          contact,
-        });
-        res.send(createdOwner);
-      }
-    });
-  } catch (err) {
-    res.send(err.message);
-  }
+      } 
+      
+      let createdOwner = await ownerModel.create({
+        fullname,
+        email,
+        password,
+        contact,
+      });
+      res.send(createdOwner);
+    } catch (err) {
+      res.send(err.message);
+    }
+  }); // Moved try/catch cleanly inside the route handler callback
 }
 
 router.get("/admin", async (req, res) => {
-  let success = req.flash("success") ;
-    res.render('createproducts',{success});
-  });
+  let success = req.flash("success");
+  res.render('createproducts', { success });
+});
 
-router.post('/')
+// Fixed: Removed the empty router.post('/') line that was causing the crash
 
 module.exports = router;

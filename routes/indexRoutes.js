@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express();
 const productSchema = require('../Models/Product-model');
-const islogeedin = require('../middlewares/isLogeedIn')
+const islogeedin = require('../middlewares/isLoggedIn')
 
 router.get("/", function (req, res) {
     let error = req.flash("error");
