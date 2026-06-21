@@ -30,4 +30,4 @@ app.use('/owner' , ownerRoutes );
 app.use('/product' , productRoutes );
 app.use('/user' , userRoutes)
 
-app.listen(3000);
+module.exports = app
